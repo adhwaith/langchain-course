@@ -108,3 +108,25 @@ if __name__ == "__main__":
     print("Hello LangChain Agent (.bind_tools)!")
     print()
     result = run_agent("What is the price of a laptop after applying a gold discount?")
+
+    """
+    # load_dotenv: loads environment variables (API keys, LangSmith settings) from the .env file.
+# init_chat_model: LangChain helper that creates a chat model for any provider from a "provider:model" string.
+# @tool: decorator that turns a Python function into a LangChain tool, building its JSON schema from the name, type hints, and docstring.
+# docstring: the triple-quoted text under a function, used as the tool description the model reads.
+# @traceable: LangSmith decorator that records a function call so you can inspect it in the dashboard.
+# MAX_ITERATIONS: safety cap that stops the loop if the model never gives a final answer.
+# SystemMessage: sets the model's role and rules for the whole conversation.
+# HumanMessage: carries the user's question.
+# AIMessage (ai_message): the model's reply, containing either a final answer or tool calls.
+# ToolMessage: sends a tool's result back to the model, linked to its request by tool_call_id.
+# tools_dict: maps tool names (strings) to tool objects so the model's chosen name can be looked up and run.
+# bind_tools: attaches the tool schemas to the model so it can request tool calls.
+# temperature=0: makes the model's output as deterministic as possible.
+# tool_calls: the list of tools the model asked to run, each with a name, args, and id; empty means a final answer.
+# tool_call_id: unique id that ties a ToolMessage result to the specific tool call it answers.
+# invoke: runs a model or tool once and returns its result.
+# messages list: the conversation history, re-sent to the model every iteration since it has no memory.
+# Agent loop: repeats model call, tool execution, and result feedback until the model answers without tool calls.
+    
+    """
