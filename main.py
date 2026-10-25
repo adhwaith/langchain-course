@@ -14,7 +14,7 @@ load_dotenv()
 print("Initializing components...")
 
 embeddings = OpenAIEmbeddings()
-llm = ChatOpenAI()
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 vectorstore = PineconeVectorStore(
     index_name=os.environ["INDEX_NAME"], embedding=embeddings
@@ -142,3 +142,76 @@ if __name__ == "__main__":
     result_with_lcel = chain_with_lcel.invoke({"question": query})
     print("\nAnswer:")
     print(result_with_lcel)
+
+
+"""
+OpenAIEmbeddings() – Converts the user's question into a vector for semantic search.
+
+
+
+ChatOpenAI() – Initializes the LLM that generates the final answer.
+
+
+
+PineconeVectorStore() – Connects LangChain to the existing Pinecone index.
+
+
+
+as_retriever() – Converts the vector store into a retriever that fetches relevant documents.
+
+
+
+search_kwargs={"k": 3} – Retrieves the three most relevant document chunks for each query.
+
+
+
+ChatPromptTemplate – Defines a prompt containing the retrieved context and the user's question.
+
+
+
+format_docs() – Combines the retrieved document chunks into a single context string.
+
+
+
+retriever.invoke(query) – Searches Pinecone and returns relevant documents for the question.
+
+
+
+HumanMessage – Represents the user's message when directly invoking the LLM.
+
+
+
+llm.invoke() – Sends the formatted messages to the LLM and obtains its response.
+
+
+
+response.content – Extracts the text of the LLM's response.
+
+
+
+RunnablePassthrough.assign() – Preserves the input question while adding the retrieved context to the input dictionary.
+
+
+
+itemgetter("question") – Extracts the question from the input dictionary for retrieval.
+
+
+
+| (LCEL pipe) – Connects LangChain components so the output of one step becomes the input of the next.
+
+
+
+StrOutputParser() – Converts the LLM response into a plain string.
+
+
+
+chain.invoke() – Executes the complete LCEL retrieval chain with the supplied question.
+
+
+
+chain.stream() – Produces output incrementally when the chain's components support streaming.
+
+
+
+chain.ainvoke() – Executes the chain asynchronously.
+"""
