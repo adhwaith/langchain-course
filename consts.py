@@ -1,1 +1,1 @@
-INDEX_NAME = "langchain-docs-2025"
+INDEX_NAME = "rag"
